@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Python App</title>
+</head>
+<body>
+    <h1>Enter a number</h1>
+    <form id="calc-form">
+        <input type="text" name="input_number" id="input_number">
+        <input type="submit" value="Calculate">
+    </form>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById("calc-form").onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch("/calculate", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById("output").innerText = data.result || data.error;
+        };
+    </script>
+</body>
+</html>
